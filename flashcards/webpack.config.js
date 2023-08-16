@@ -1,5 +1,5 @@
 require('dotenv').config({path: `${__dirname}/.env`}) // http://bit.ly/2WE8EJP
-const {NODE_ENV, DEV_SERVER_PORT, API, API_PORT, API_WEBPACK} = process.env
+const {NODE_ENV, DEV_SERVER_PORT} = process.env
 const path = require('path')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -349,11 +349,6 @@ module.exports = (env, argv) => ({
       __DEV__: !env.prod,
       __PROD__: env.prod,
 
-      /*
-        You can use this variable on the front end to prefix all fetch requests:
-          fetch(`${__API__}/my-route`)
-      */
-      __API__: JSON.stringify(API),
 
       /*
         http://bit.ly/2WBx4DZ
@@ -458,38 +453,6 @@ module.exports = (env, argv) => ({
       Nobody wants to see 0.0.0.0 in the browser. This get's rid of that.
     */
     public: `http://localhost:${DEV_SERVER_PORT}`,
-
-    /*
-      http://bit.ly/2XlEOXN
-      Redirect non-static asset calls to the backend API server.
-      Unrecognized urls (non-API calls) will be directed to '/'.
-      404's will be served `index.html` by `historyApiFallback` above.
-    */
-    proxy: API_WEBPACK
-      ? {
-          [API_WEBPACK]: {
-            target: `http://localhost:${API_PORT}`,
-            bypass(req, res, proxyOptions) {
-              // Direct all non-get requests to the API server.
-              if (req.method.toLowerCase() !== 'get') return
-
-              /*
-            Proxy url (browser) requests back to '/'
-            and let the front end do all the routing.
-            For all others, let the API server respond.
-          */
-
-              /*
-            http://bit.ly/2XlEOXN
-            Url / browser request - allow front end routing to handle all the things.
-          */
-              if ((req.headers.accept || '').includes('html')) return '/'
-
-              // Let the API server respond by implicitly returning here.
-            },
-          },
-        }
-      : {},
 
     // https://bit.ly/3nM4mL0
     watchContentBase: true,
