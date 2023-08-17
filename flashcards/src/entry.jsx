@@ -18,12 +18,15 @@ import NotFound from 'components/NotFound'
 
 // Import React Router things.
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import Load from './components/Load'
+import Bar from './components/Bar'
 
 // Mount our app.
 ReactDOM.render(
   <Router>
     <Switch>
       <Route exact path="/" component={Home} />
+      <Route exact path="/load" component={Load} />
       <Route component={NotFound} />
     </Switch>
   </Router>,

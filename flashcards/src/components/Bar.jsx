@@ -12,7 +12,12 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import PsychologyIcon from '@mui/icons-material/Psychology';
 
-const pages = ['Load', 'Current'];
+const pages = [
+  {
+    name: "Load",
+    link: "/load"
+  }
+];
 
 function Bar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -79,8 +84,8 @@ function Bar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.link} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -105,13 +110,14 @@ function Bar() {
             Flashcards
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
+            {pages.map(page => (
               <Button
-                key={page}
+                key={page.name}
                 onClick={handleCloseNavMenu}
+                href={page.link}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {page.name}
               </Button>
             ))}
           </Box>

@@ -300,7 +300,8 @@ module.exports = (env, argv) => ({
       http://bit.ly/2WI1BQo
       Automatically resolve certain extensions without having to type them out.
     */
-    extensions: ['.js', '.jsx', '.json', '.scss'],
+    extensions: ['.tsx', '.ts', '.js', '.jsx', '.json', '.scss', '.css'],
+    modules: ['src', 'node_modules'] ,
   },
 
   // http://bit.ly/2WH6fOH

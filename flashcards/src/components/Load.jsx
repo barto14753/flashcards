@@ -1,13 +1,14 @@
 import React from 'react'
 import Bar from './Bar'
+import FileLoad from './FileLoad'
 
-const Home = () => {
+const Load = () => {
   return (
     <>
       <Bar />
-      <h1>Flashcards</h1>
+      <FileLoad />
     </>
   )
 }
 
-export default Home
+export default Load
