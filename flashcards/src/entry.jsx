@@ -19,7 +19,7 @@ import NotFound from 'components/NotFound'
 // Import React Router things.
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Load from './components/Load'
-import Quiz from './components/Quiz'
+import QuizEntry from './components/QuizEntry'
 
 // Mount our app.
 ReactDOM.render(
@@ -27,7 +27,7 @@ ReactDOM.render(
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/load" component={Load} />
-      <Route exact path="/quiz" component={Quiz} />
+      <Route exact path="/quiz" component={QuizEntry} />
       <Route component={NotFound} />
     </Switch>
   </Router>,
