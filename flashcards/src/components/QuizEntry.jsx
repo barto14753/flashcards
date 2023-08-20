@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom';
 import Bar from "./Bar";
 import {
   Box,
@@ -24,9 +25,15 @@ var cardStyle = {
 }
 
 const QuizEntry = () => {
+  const history = useHistory();
   const [questions, setQuestions] = useState(
     JSON.parse(localStorage.getItem("questions")) || [],
   );
+
+  const startQuiz = () => {
+    localStorage.setItem('questionNum', 0);
+    history.push("/quiz");
+  }
 
   const cards = [
     {
@@ -56,32 +63,27 @@ const QuizEntry = () => {
       form: [
         {
           type: "radio",
-          title: "Until",
-          buttons: [
-            { id: "iteration", name: "All question answered" },
-            { id: "allCorrect", name: "All answers correct" },
-          ],
-        },
-        {
-          type: "radio",
           title: "Order",
           buttons: [
             { id: "singleFirst", name: "Single choice first" },
             { id: "multipleFirst", name: "Multiple choice first" },
           ],
         },
-        // {
-        //   type: "checkbox",
-        //   title: "Checkbox form",
-        //   buttons: [
-        //     { id: "one", name: "one" },
-        //     { id: "two", name: "two" },
-        //   ],
-        // },
+        {
+          type: "checkbox",
+          title: "Options",
+          buttons: [
+            { id: "shuffleQuestions", name: "Shuffle questions" },
+            { id: "shuffleAnswers", name: "Shuffle answers" },
+            { id: "untilAllCorrect", name: "Until all answers correct" },
+            { id: "showAnswers", name: "Show correct answers" },
+          ],
+        },
       ],
 
       buttonText: "Start quiz",
       buttonVariant: "contained",
+      buttonAction: startQuiz,
     },
     {
       title: "Statistics",
@@ -184,7 +186,7 @@ const QuizEntry = () => {
                   </ul>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={card.buttonVariant}>
+                  <Button fullWidth variant={card.buttonVariant} onClick={card.buttonAction}>
                     {card.buttonText}
                   </Button>
                 </CardActions>

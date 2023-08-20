@@ -19,7 +19,7 @@ const pages = [
   },
   {
     name: "Quiz",
-    link: "/quiz"
+    link: "/quiz-entry"
   }
 ];
 
