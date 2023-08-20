@@ -40,19 +40,16 @@ At first you need to prepare text file with your questions
 `
 
 const Home = () => {
-
   const containerStyles = {
     color: 'black',
     padding: '25px',
-  };
+  }
 
   return (
     <>
       <Bar />
       <div style={containerStyles}>
-      <ReactMarkdown 
-        children={markdown} 
-      />
+        <ReactMarkdown children={markdown} />
       </div>
     </>
   )

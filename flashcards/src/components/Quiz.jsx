@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Bar from "./Bar";
+import React, {useState} from 'react'
+import Bar from './Bar'
 import {
   Button,
   Checkbox,
@@ -10,50 +10,56 @@ import {
   Grid,
   Radio,
   RadioGroup,
-} from "@mui/material";
-import { makeStyles } from "@mui/styles";
+} from '@mui/material'
+import {makeStyles} from '@mui/styles'
 
-const useStyles = makeStyles((theme) => ({
-  goodAnswer: {
-    background: "#66bb6a",
-    paddingRight: "25px",
-    marginTop: "15px",
-    borderRadius: "5px",
-    color: "white",
+const useStyles = makeStyles(theme => ({
+  correctAnswer: {
+    background: '#66bb6a',
+    paddingRight: '25px',
+    marginTop: '15px',
+    borderRadius: '5px',
+    color: 'white',
   },
 
   wrongAnswer: {
-    background: "#f44336",
-    paddingRight: "25px",
-    marginTop: "15px",
-    borderRadius: "5px",
-    color: "white",
+    background: '#f44336',
+    paddingRight: '25px',
+    marginTop: '15px',
+    borderRadius: '5px',
+    color: 'white',
   },
-}));
+}))
 
 const Quiz = () => {
-  const classes = useStyles();
-
+  const classes = useStyles()
   const [questions, setQuestions] = useState(
-    JSON.parse(localStorage.getItem("questions")) || [],
-  );
-
+    JSON.parse(localStorage.getItem('questions')) || [],
+  )
   const [questionNum, setQuestionNum] = useState(
-    parseInt(localStorage.getItem("questionNum")) || 0,
-  );
+    parseInt(localStorage.getItem('questionNum')) || 0,
+  )
+  const [isAnswered, setIsAnswered] = useState(false)
+  const question = questions[questionNum]
+  const isSingleChoice = question.correct.length === 1
+  const getFormLabelClass = answer => {
+    const answerIndex = question.answers.findIndex(val => val === answer)
 
-  const [isAnswered, setIsAnswered] = useState(false);
-
-  const question = questions[questionNum];
-  const isSingleChoice = question.correct.length === 1;
-
-  const getFormLabelClass = (answer) => {};
+    if (isAnswered) {
+      return question.correct.includes(answerIndex)
+        ? classes.correctAnswer
+        : classes.wrongAnswer
+    }
+  }
 
   const handleCheck = () => {
-    setIsAnswered(true);
-  };
+    setIsAnswered(true)
+  }
 
-  const handleNext = () => {};
+  const handleNext = () => {
+    setQuestionNum((questionNum + 1) % questions.length)
+    setIsAnswered(false)
+  }
 
   return (
     <>
@@ -72,25 +78,28 @@ const Quiz = () => {
                 {isSingleChoice ? (
                   <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group"
-                  >
-                    {question.answers.map((a) => (
+                    name="radio-buttons-group">
+                    {question.answers.map(a => (
                       <FormControlLabel
-                        className={classes.customFormControlLabel}
+                        className={getFormLabelClass(a)}
+                        key={a}
                         value={a}
                         control={<Radio />}
                         label={a}
+                        disabled={isAnswered}
                       />
                     ))}
                   </RadioGroup>
                 ) : (
                   <FormGroup>
-                    {question.answers.map((a) => (
+                    {question.answers.map(a => (
                       <FormControlLabel
-                        className={classes.customFormControlLabel}
+                        className={getFormLabelClass(a)}
+                        key={a}
                         value={a}
                         control={<Checkbox />}
                         label={a}
+                        disabled={isAnswered}
                       />
                     ))}
                   </FormGroup>
@@ -99,21 +108,19 @@ const Quiz = () => {
                 {isAnswered ? (
                   <Button
                     onClick={handleNext}
-                    style={{ marginTop: "20px" }}
+                    style={{marginTop: '20px'}}
                     type="submit"
                     variant="contained"
-                    color="secondary"
-                  >
+                    color="primary">
                     Next
                   </Button>
                 ) : (
                   <Button
                     onClick={handleCheck}
-                    style={{ marginTop: "20px" }}
+                    style={{marginTop: '20px'}}
                     type="submit"
                     variant="contained"
-                    color="primary"
-                  >
+                    color="success">
                     Check
                   </Button>
                 )}
@@ -123,7 +130,7 @@ const Quiz = () => {
         </Grid>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default Quiz;
+export default Quiz

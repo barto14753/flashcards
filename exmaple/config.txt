@@ -1,0 +1,11 @@
+# Example flashcard
+
+=When II World War started?
+==1938
+==>1939
+==1940
+=Which equations equals 4?
+==>2+2
+==2%2
+==>2*2
+==>2^2
