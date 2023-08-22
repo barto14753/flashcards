@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
 
 const Quiz = () => {
   const classes = useStyles()
+
   const [questions, setQuestions] = useState(
     JSON.parse(localStorage.getItem('questions')) || [],
   )
@@ -40,11 +41,15 @@ const Quiz = () => {
     parseInt(localStorage.getItem('questionNum')) || 0,
   )
   const [isAnswered, setIsAnswered] = useState(false)
+
   const question = questions[questionNum]
+  const [choices, setChoices] = useState(
+    Array(question.answers.length).fill(false) || [],
+  )
+  console.log(choices)
   const isSingleChoice = question.correct.length === 1
   const getFormLabelClass = answer => {
     const answerIndex = question.answers.findIndex(val => val === answer)
-
     if (isAnswered) {
       return question.correct.includes(answerIndex)
         ? classes.correctAnswer
@@ -52,12 +57,32 @@ const Quiz = () => {
     }
   }
 
-  const handleCheck = () => {
+  const handleRadioChange = event => {
+    const answerValue = event.target.value
+    const answerIdx = question.answers.indexOf(answerValue)
+    const newChoices = Array(choices.length).fill(false)
+    newChoices[answerIdx] = true
+    setChoices(newChoices)
+  }
+
+  const handleCheckboxChange = event => {
+    const answerValue = event.target.value
+    const answerIdx = question.answers.indexOf(answerValue)
+    const newChoices = choices
+    newChoices[answerIdx] = !newChoices[answerIdx]
+    console.log(newChoices)
+    setChoices(newChoices)
+  }
+
+  const handleCheck = event => {
     setIsAnswered(true)
   }
 
   const handleNext = () => {
-    setQuestionNum((questionNum + 1) % questions.length)
+    const newQuestionNum = (questionNum + 1) % questions.length
+    localStorage.setItem('questionNum', newQuestionNum)
+    setQuestionNum(newQuestionNum)
+    setChoices(Array(question.answers.length).fill(false))
     setIsAnswered(false)
   }
 
@@ -76,9 +101,7 @@ const Quiz = () => {
             <>
               <FormControl>
                 {isSingleChoice ? (
-                  <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    name="radio-buttons-group">
+                  <RadioGroup onChange={handleRadioChange}>
                     {question.answers.map(a => (
                       <FormControlLabel
                         className={getFormLabelClass(a)}
@@ -91,7 +114,7 @@ const Quiz = () => {
                     ))}
                   </RadioGroup>
                 ) : (
-                  <FormGroup>
+                  <FormGroup onChange={handleCheckboxChange}>
                     {question.answers.map(a => (
                       <FormControlLabel
                         className={getFormLabelClass(a)}
