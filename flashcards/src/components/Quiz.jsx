@@ -40,13 +40,21 @@ const Quiz = () => {
   const [questionNum, setQuestionNum] = useState(
     parseInt(localStorage.getItem('questionNum')) || 0,
   )
+  console.log('Question num', questionNum)
   const [isAnswered, setIsAnswered] = useState(false)
 
   const question = questions[questionNum]
+  console.log('Question', question)
+
   const [choices, setChoices] = useState(
     Array(question.answers.length).fill(false) || [],
   )
+
+  if (choices.length != question.answers.length) {
+    setChoices(Array(question.answers.length).fill(false))
+  }
   console.log(choices)
+
   const isSingleChoice = question.correct.length === 1
   const getFormLabelClass = answer => {
     const answerIndex = question.answers.findIndex(val => val === answer)
@@ -60,7 +68,7 @@ const Quiz = () => {
   const handleRadioChange = event => {
     const answerValue = event.target.value
     const answerIdx = question.answers.indexOf(answerValue)
-    const newChoices = Array(choices.length).fill(false)
+    const newChoices = Array(question.answers.length).fill(false)
     newChoices[answerIdx] = true
     setChoices(newChoices)
   }
@@ -68,9 +76,8 @@ const Quiz = () => {
   const handleCheckboxChange = event => {
     const answerValue = event.target.value
     const answerIdx = question.answers.indexOf(answerValue)
-    const newChoices = choices
+    const newChoices = Array.from(choices)
     newChoices[answerIdx] = !newChoices[answerIdx]
-    console.log(newChoices)
     setChoices(newChoices)
   }
 
