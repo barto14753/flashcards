@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import Bar from './Bar'
 import {
+  Alert,
   Button,
   Checkbox,
   Container,
@@ -12,6 +13,12 @@ import {
   RadioGroup,
 } from '@mui/material'
 import {makeStyles} from '@mui/styles'
+import {
+  CORRECT,
+  INCORRECT_CHOSEN,
+  NOT_ALL_CORRECT_CHOSEN,
+  NOT_ANSWERED,
+} from '../utils/QuestionResult'
 
 const useStyles = makeStyles(theme => ({
   correctAnswer: {
@@ -34,17 +41,17 @@ const useStyles = makeStyles(theme => ({
 const Quiz = () => {
   const classes = useStyles()
 
+  const [result, setResult] = useState(NOT_ANSWERED)
+
   const [questions, setQuestions] = useState(
     JSON.parse(localStorage.getItem('questions')) || [],
   )
   const [questionNum, setQuestionNum] = useState(
     parseInt(localStorage.getItem('questionNum')) || 0,
   )
-  console.log('Question num', questionNum)
   const [isAnswered, setIsAnswered] = useState(false)
 
   const question = questions[questionNum]
-  console.log('Question', question)
 
   const [choices, setChoices] = useState(
     Array(question.answers.length).fill(false) || [],
@@ -53,7 +60,6 @@ const Quiz = () => {
   if (choices.length != question.answers.length) {
     setChoices(Array(question.answers.length).fill(false))
   }
-  console.log(choices)
 
   const isSingleChoice = question.correct.length === 1
   const getFormLabelClass = answer => {
@@ -62,6 +68,23 @@ const Quiz = () => {
       return question.correct.includes(answerIndex)
         ? classes.correctAnswer
         : classes.wrongAnswer
+    }
+  }
+
+  const getResult = () => {
+    switch (result) {
+      case CORRECT:
+        return <Alert severity="success">This is correct answer!</Alert>
+      case NOT_ALL_CORRECT_CHOSEN:
+        return (
+          <Alert severity="warning">
+            You missed at least one correct answer!
+          </Alert>
+        )
+      case INCORRECT_CHOSEN:
+        return <Alert severity="error">This is incorrect!</Alert>
+      default:
+        return
     }
   }
 
@@ -82,6 +105,15 @@ const Quiz = () => {
   }
 
   const handleCheck = event => {
+    const allCorrectChosen = question.correct.every(
+      correctIdx => choices[correctIdx],
+    )
+    const sameCorrectAnswersAndChoices =
+      question.correct.length === choices.filter(c => c).length
+
+    if (allCorrectChosen && sameCorrectAnswersAndChoices) setResult(CORRECT)
+    else if (allCorrectChosen) setResult(INCORRECT_CHOSEN)
+    else setResult(NOT_ALL_CORRECT_CHOSEN)
     setIsAnswered(true)
   }
 
@@ -90,6 +122,7 @@ const Quiz = () => {
     localStorage.setItem('questionNum', newQuestionNum)
     setQuestionNum(newQuestionNum)
     setChoices(Array(question.answers.length).fill(false))
+    setResult(NOT_ANSWERED)
     setIsAnswered(false)
   }
 
@@ -104,6 +137,7 @@ const Quiz = () => {
           <Grid item xs={12}>
             <h2>{question.question}</h2>
           </Grid>
+          {getResult()}
           <Grid item xs={12}>
             <>
               <FormControl>

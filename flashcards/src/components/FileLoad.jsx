@@ -32,7 +32,6 @@ const FileLoad = () => {
   }
 
   const parseQuestions = rawLines => {
-    console.log(rawLines)
     const lines = rawLines.split('\n')
     let questions = []
     let currentQuestion = {}
