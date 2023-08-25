@@ -33,3 +33,9 @@ At first you need to prepare text file with your questions
 ==>4-2
 
 ```
+## Screenshots
+![Home](https://github.com/barto14753/flashcards/assets/56938330/a24fa0aa-e8af-4618-8b5f-983a03cf8f9f)
+![Input](https://github.com/barto14753/flashcards/assets/56938330/895d0467-1f1d-4325-be7c-d352d660e574)
+![Question](https://github.com/barto14753/flashcards/assets/56938330/ff4250d8-d362-42da-b4c9-be35b53f52d1)
+![Answer](https://github.com/barto14753/flashcards/assets/56938330/e9b1e792-875d-43dc-9fed-9f783e8d25ab)
+
