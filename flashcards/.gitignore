@@ -5,9 +5,9 @@
 .DS_Store
 
 # Ignore all files in the dist folder BUT a few
-dist/*
-!dist/favicon.ico
-!dist/robots.txt
+build/*
+!build/favicon.ico
+!build/robots.txt
 
 # Logs
 logs
