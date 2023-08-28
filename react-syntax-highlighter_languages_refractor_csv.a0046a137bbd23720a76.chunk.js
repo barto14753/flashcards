@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunk=this.webpackChunk||[]).push([[2526],{5031:s=>{function a(s){s.languages.csv={value:/[^\r\n,"]+|"(?:[^"]|"")*"(?!")/,punctuation:/,/}}s.exports=a,a.displayName="csv",a.aliases=[]}}]);

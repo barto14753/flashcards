@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunk=this.webpackChunk||[]).push([[1438],{1253:t=>{function a(t){t.languages.arff={comment:/%.*/,string:{pattern:/(["'])(?:\\.|(?!\1)[^\\\r\n])*\1/,greedy:!0},keyword:/@(?:attribute|data|end|relation)\b/i,number:/\b\d+(?:\.\d+)?\b/,punctuation:/[{},]/}}t.exports=a,a.displayName="arff",a.aliases=[]}}]);

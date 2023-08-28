@@ -1,0 +1,1 @@
+"use strict";(this.webpackChunk=this.webpackChunk||[]).push([[2564],{3351:t=>{function e(t){t.languages.git={comment:/^#.*/m,deleted:/^[-\u2013].*/m,inserted:/^\+.*/m,string:/("|')(?:\\.|(?!\1)[^\\\r\n])*\1/,command:{pattern:/^.*\$ git .*$/m,inside:{parameter:/\s--?\w+/}},coord:/^@@.*@@$/m,"commit-sha1":/^commit \w{40}$/m}}t.exports=e,e.displayName="git",e.aliases=[]}}]);
