@@ -23,6 +23,7 @@ jobs:
         working-directory: ./flashcards
         run: |
           npm ci
+          npm install
           npm run build --if-present
           npm test
       - name: deploy to gh-pages
