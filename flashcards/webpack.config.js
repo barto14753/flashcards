@@ -84,7 +84,7 @@ module.exports = (env, argv) => ({
       The URL of your `output.path` from the view of the HTML page.
       The value of the option is prefixed to every URL created by the runtime or loaders.
     */
-    publicPath: '/',
+    publicPath: '/flashcards',
 
     /*
       http://bit.ly/2IFBbGL
