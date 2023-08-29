@@ -26,10 +26,10 @@ import Quiz from './components/Quiz'
 ReactDOM.render(
   <Router>
     <Switch>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/load" component={Load} />
-      <Route exact path="/quiz-entry" component={QuizEntry} />
-      <Route exact path="/quiz" component={Quiz} />
+      <Route exact path="/flashcards/" component={Home} />
+      <Route exact path="/flashcards/load" component={Load} />
+      <Route exact path="/flashcards/quiz-entry" component={QuizEntry} />
+      <Route exact path="/flashcards/quiz" component={Quiz} />
       <Route component={NotFound} />
     </Switch>
   </Router>,
