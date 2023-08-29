@@ -21,10 +21,11 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import Load from './components/Load'
 import QuizEntry from './components/QuizEntry'
 import Quiz from './components/Quiz'
+import {HashRouter} from 'react-router-dom/cjs/react-router-dom.min'
 
 // Mount our app.
 ReactDOM.render(
-  <Router>
+  <HashRouter basename="/flashcards">
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/load" component={Load} />
@@ -32,6 +33,6 @@ ReactDOM.render(
       <Route exact path="/quiz" component={Quiz} />
       <Route component={NotFound} />
     </Switch>
-  </Router>,
+  </HashRouter>,
   document.querySelector('#app'),
 )

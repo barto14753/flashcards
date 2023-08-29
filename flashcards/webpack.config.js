@@ -71,7 +71,7 @@ module.exports = (env, argv) => ({
       http://bit.ly/2KjYRSI
       The output directory as an absolute path.
     */
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
 
     /*
       http://bit.ly/2Kmdcy1
@@ -84,7 +84,7 @@ module.exports = (env, argv) => ({
       The URL of your `output.path` from the view of the HTML page.
       The value of the option is prefixed to every URL created by the runtime or loaders.
     */
-    publicPath: '/',
+    publicPath: '/flashcards',
 
     /*
       http://bit.ly/2IFBbGL
@@ -293,7 +293,7 @@ module.exports = (env, argv) => ({
       components: path.resolve(__dirname, 'src/components'),
       assets: path.resolve(__dirname, 'src/assets'),
       hooks: path.resolve(__dirname, 'src/hooks'),
-      helpers: path.resolve(__dirname, 'src/helpers')
+      helpers: path.resolve(__dirname, 'src/helpers'),
     },
 
     /*
@@ -301,7 +301,7 @@ module.exports = (env, argv) => ({
       Automatically resolve certain extensions without having to type them out.
     */
     extensions: ['.tsx', '.ts', '.js', '.jsx', '.json', '.scss', '.css'],
-    modules: ['src', 'node_modules'] ,
+    modules: ['src', 'node_modules'],
   },
 
   // http://bit.ly/2WH6fOH
@@ -349,7 +349,6 @@ module.exports = (env, argv) => ({
       */
       __DEV__: !env.prod,
       __PROD__: env.prod,
-
 
       /*
         http://bit.ly/2WBx4DZ
@@ -424,7 +423,7 @@ module.exports = (env, argv) => ({
       This is only necessary if you want to serve static files.
       Content not served from Webpack's devServer is served from here.
     */
-    contentBase: path.resolve(__dirname, 'dist'),
+    contentBase: path.resolve(__dirname, 'build'),
 
     /*
       http://bit.ly/2WFe8nS

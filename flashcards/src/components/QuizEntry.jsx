@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useHistory } from 'react-router-dom';
-import Bar from "./Bar";
+import React, {useState} from 'react'
+import {useHistory} from 'react-router-dom'
+import Bar from './Bar'
 import {
   Box,
   Button,
@@ -18,113 +18,107 @@ import {
   Radio,
   RadioGroup,
   Typography,
-} from "@mui/material";
+} from '@mui/material'
 
 var cardStyle = {
-  minHeight: '20vw'
+  minHeight: '20vw',
 }
 
 const QuizEntry = () => {
-  const history = useHistory();
+  const history = useHistory()
   const [questions, setQuestions] = useState(
-    JSON.parse(localStorage.getItem("questions")) || [],
-  );
+    JSON.parse(localStorage.getItem('questions')) || [],
+  )
 
   const startQuiz = () => {
-    localStorage.setItem('questionNum', 0);
-    history.push("/quiz");
+    localStorage.setItem('questionNum', 0)
+    history.replace('/quiz')
   }
 
   const cards = [
     {
-      title: "Questions",
+      title: 'Questions',
       description: [
-        "Count: " + questions.length.toString(),
-        "Single choice: " +
-          questions.filter((q) => q.correct.length === 1).length.toString(),
-        "Multiple choice: " +
-          questions.filter((q) => q.correct.length > 1).length.toString(),
-        "Min answers: " +
-          questions
-            .map((q) => q.answers.length)
-            .reduce((a, b) => Math.min(a, b)),
-        "Max answers: " +
-          questions
-            .map((q) => q.answers.length)
-            .reduce((a, b) => Math.max(a, b)),
+        'Count: ' + questions.length.toString(),
+        'Single choice: ' +
+          questions.filter(q => q.correct.length === 1).length.toString(),
+        'Multiple choice: ' +
+          questions.filter(q => q.correct.length > 1).length.toString(),
+        'Min answers: ' +
+          questions.map(q => q.answers.length).reduce((a, b) => Math.min(a, b)),
+        'Max answers: ' +
+          questions.map(q => q.answers.length).reduce((a, b) => Math.max(a, b)),
       ],
       form: [],
-      buttonText: "Show details",
-      buttonVariant: "outlined",
+      buttonText: 'Show details',
+      buttonVariant: 'outlined',
     },
     {
-      title: "Quiz",
+      title: 'Quiz',
       description: [],
       form: [
         {
-          type: "radio",
-          title: "Order",
+          type: 'radio',
+          title: 'Order',
           buttons: [
-            { id: "singleFirst", name: "Single choice first" },
-            { id: "multipleFirst", name: "Multiple choice first" },
+            {id: 'singleFirst', name: 'Single choice first'},
+            {id: 'multipleFirst', name: 'Multiple choice first'},
           ],
         },
         {
-          type: "checkbox",
-          title: "Options",
+          type: 'checkbox',
+          title: 'Options',
           buttons: [
-            { id: "shuffleQuestions", name: "Shuffle questions" },
-            { id: "shuffleAnswers", name: "Shuffle answers" },
-            { id: "untilAllCorrect", name: "Until all answers correct" },
-            { id: "showAnswers", name: "Show correct answers" },
+            {id: 'shuffleQuestions', name: 'Shuffle questions'},
+            {id: 'shuffleAnswers', name: 'Shuffle answers'},
+            {id: 'untilAllCorrect', name: 'Until all answers correct'},
+            {id: 'showAnswers', name: 'Show correct answers'},
           ],
         },
       ],
 
-      buttonText: "Start quiz",
-      buttonVariant: "contained",
+      buttonText: 'Start quiz',
+      buttonVariant: 'contained',
       buttonAction: startQuiz,
     },
     {
-      title: "Statistics",
+      title: 'Statistics',
       description: [
-        "Correct: {}",
-        "Wrong: {}",
-        "Correct/Wrong %: {}",
-        "Questions answered: {}",
-        "Uploaded: {}",
+        'Correct: {}',
+        'Wrong: {}',
+        'Correct/Wrong %: {}',
+        'Questions answered: {}',
+        'Uploaded: {}',
       ],
       form: [],
-      buttonText: "Show details",
-      buttonVariant: "outlined",
+      buttonText: 'Show details',
+      buttonVariant: 'outlined',
     },
-  ];
+  ]
 
   return (
     <>
       <Bar />
-      <Container maxWidth="md" component="main" sx={{ p: 5 }}>
+      <Container maxWidth="md" component="main" sx={{p: 5}}>
         <Grid container spacing={5} alignItems="flex-end">
-          {cards.map((card) => (
+          {cards.map(card => (
             <Grid
               item
               key={card.title}
               xs={12}
-              sm={card.title === "Quiz" ? 12 : 6}
-              md={4}
-
-            >
+              sm={card.title === 'Quiz' ? 12 : 6}
+              md={4}>
               <Card style={cardStyle}>
                 <CardHeader
                   title={card.title}
                   subheader={card.subheader}
-                  titleTypographyProps={{ align: "center" }}
+                  titleTypographyProps={{align: 'center'}}
                   subheaderTypographyProps={{
-                    align: "center",
+                    align: 'center',
                   }}
                   sx={{
-                    backgroundColor: (theme) =>
-                      theme.palette.mode === "light"
+                    backgroundColor: theme =>
+                      theme.palette.mode === 'light'
                         ? theme.palette.grey[200]
                         : theme.palette.grey[700],
                   }}
@@ -132,22 +126,20 @@ const QuizEntry = () => {
                 <CardContent>
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "baseline",
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'baseline',
                       mb: 2,
-                    }}
-                  ></Box>
+                    }}></Box>
                   <FormControl>
-                    {card.form.map((f) =>
-                      f.type === "radio" ? (
+                    {card.form.map(f =>
+                      f.type === 'radio' ? (
                         <>
                           <FormLabel>{f.title}</FormLabel>
                           <RadioGroup
                             aria-labelledby="demo-radio-buttons-group-label"
-                            name="radio-buttons-group"
-                          >
-                            {f.buttons.map((b) => (
+                            name="radio-buttons-group">
+                            {f.buttons.map(b => (
                               <FormControlLabel
                                 value={b.id}
                                 control={<Radio />}
@@ -160,7 +152,7 @@ const QuizEntry = () => {
                         <>
                           <FormLabel>{f.title}</FormLabel>
                           <FormGroup>
-                            {f.buttons.map((b) => (
+                            {f.buttons.map(b => (
                               <FormControlLabel
                                 value={b.id}
                                 control={<Checkbox />}
@@ -173,20 +165,22 @@ const QuizEntry = () => {
                     )}
                   </FormControl>
                   <ul>
-                    {card.description.map((line) => (
+                    {card.description.map(line => (
                       <Typography
                         component="li"
                         variant="subtitle1"
                         align="left"
-                        key={line}
-                      >
+                        key={line}>
                         {line}
                       </Typography>
                     ))}
                   </ul>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={card.buttonVariant} onClick={card.buttonAction}>
+                  <Button
+                    fullWidth
+                    variant={card.buttonVariant}
+                    onClick={card.buttonAction}>
                     {card.buttonText}
                   </Button>
                 </CardActions>
@@ -196,7 +190,7 @@ const QuizEntry = () => {
         </Grid>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default QuizEntry;
+export default QuizEntry
