@@ -34,8 +34,10 @@ At first you need to prepare text file with your questions
 
 ```
 ## Screenshots
-![Home](https://github.com/barto14753/flashcards/assets/56938330/a24fa0aa-e8af-4618-8b5f-983a03cf8f9f)
-![Input](https://github.com/barto14753/flashcards/assets/56938330/895d0467-1f1d-4325-be7c-d352d660e574)
-![Question](https://github.com/barto14753/flashcards/assets/56938330/ff4250d8-d362-42da-b4c9-be35b53f52d1)
-![Answer](https://github.com/barto14753/flashcards/assets/56938330/e9b1e792-875d-43dc-9fed-9f783e8d25ab)
+
+![Screenshot from 2023-08-25 17-38-15](https://github.com/barto14753/flashcards/assets/56938330/63b55f50-fc81-497c-b0e0-3d9216157336)
+![Screenshot from 2023-08-25 17-38-37](https://github.com/barto14753/flashcards/assets/56938330/2d88932b-a8d9-467e-9df3-64039406b085)
+![Screenshot from 2023-08-25 17-39-08](https://github.com/barto14753/flashcards/assets/56938330/cce76894-a9ca-46db-9844-fac594036007)
+![Screenshot from 2023-08-25 17-39-17](https://github.com/barto14753/flashcards/assets/56938330/abeabf3b-14f0-4e21-ad50-8a40bd1080fe)
+![Screenshot from 2023-08-25 17-39-46](https://github.com/barto14753/flashcards/assets/56938330/81b2804c-f88e-4a98-a809-6c5511196496)
 
