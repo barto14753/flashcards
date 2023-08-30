@@ -19,6 +19,7 @@ import {
   NOT_ALL_CORRECT_CHOSEN,
   NOT_ANSWERED,
 } from '../utils/QuestionResult'
+import {useHistory} from 'react-router-dom/cjs/react-router-dom.min'
 
 const useStyles = makeStyles(theme => ({
   correctAnswer: {
@@ -42,7 +43,6 @@ const Quiz = () => {
   const classes = useStyles()
 
   const [result, setResult] = useState(NOT_ANSWERED)
-
   const [questions, setQuestions] = useState(
     JSON.parse(localStorage.getItem('questions')) || [],
   )
@@ -52,15 +52,12 @@ const Quiz = () => {
   const [isAnswered, setIsAnswered] = useState(false)
 
   const question = questions[questionNum]
-
   const [choices, setChoices] = useState(
     Array(question.answers.length).fill(false) || [],
   )
-
   if (choices.length != question.answers.length) {
     setChoices(Array(question.answers.length).fill(false))
   }
-
   const isSingleChoice = question.correct.length === 1
   const getFormLabelClass = answer => {
     const answerIndex = question.answers.findIndex(val => val === answer)

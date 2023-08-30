@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import {useHistory} from 'react-router-dom'
 import Bar from './Bar'
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -45,9 +46,13 @@ const QuizEntry = () => {
         'Multiple choice: ' +
           questions.filter(q => q.correct.length > 1).length.toString(),
         'Min answers: ' +
-          questions.map(q => q.answers.length).reduce((a, b) => Math.min(a, b)),
+          questions
+            .map(q => q.answers.length)
+            .reduce((a, b) => Math.min(a, b), 0),
         'Max answers: ' +
-          questions.map(q => q.answers.length).reduce((a, b) => Math.max(a, b)),
+          questions
+            .map(q => q.answers.length)
+            .reduce((a, b) => Math.max(a, b), 0),
       ],
       form: [],
       buttonText: 'Show details',
@@ -99,6 +104,11 @@ const QuizEntry = () => {
   return (
     <>
       <Bar />
+      {questions.length === 0 ? (
+        <Alert severity="error">You need to load questions first</Alert>
+      ) : (
+        <></>
+      )}
       <Container maxWidth="md" component="main" sx={{p: 5}}>
         <Grid container spacing={5} alignItems="flex-end">
           {cards.map(card => (
@@ -180,7 +190,8 @@ const QuizEntry = () => {
                   <Button
                     fullWidth
                     variant={card.buttonVariant}
-                    onClick={card.buttonAction}>
+                    onClick={card.buttonAction}
+                    disabled={questions.length === 0}>
                     {card.buttonText}
                   </Button>
                 </CardActions>
