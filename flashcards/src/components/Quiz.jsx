@@ -79,7 +79,7 @@ const Quiz = () => {
           </Alert>
         )
       case INCORRECT_CHOSEN:
-        return <Alert severity="error">This is incorrect!</Alert>
+        return <Alert severity="error">This is not correct!</Alert>
       default:
         return
     }
