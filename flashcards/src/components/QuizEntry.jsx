@@ -16,8 +16,6 @@ import {
   FormGroup,
   FormLabel,
   Grid,
-  Radio,
-  RadioGroup,
   Typography,
 } from '@mui/material'
 
@@ -31,7 +29,22 @@ const QuizEntry = () => {
     JSON.parse(localStorage.getItem('questions')) || [],
   )
 
-  const startQuiz = () => {
+  const [form, setForm] = useState({
+    shuffleQuestions: false,
+    shuffleAnswers: false,
+    showAnswers: false,
+  })
+
+  const handleChange = event => {
+    const id = event.target.id
+    const isChecked = event.target.checked
+    setForm(prevValues => ({
+      ...prevValues,
+      [id]: isChecked,
+    }))
+  }
+
+  const startQuiz = event => {
     localStorage.setItem('questionNum', 0)
     history.replace('/quiz')
   }
@@ -63,20 +76,10 @@ const QuizEntry = () => {
       description: [],
       form: [
         {
-          type: 'radio',
-          title: 'Order',
-          buttons: [
-            {id: 'singleFirst', name: 'Single choice first'},
-            {id: 'multipleFirst', name: 'Multiple choice first'},
-          ],
-        },
-        {
-          type: 'checkbox',
           title: 'Options',
           buttons: [
             {id: 'shuffleQuestions', name: 'Shuffle questions'},
             {id: 'shuffleAnswers', name: 'Shuffle answers'},
-            {id: 'untilAllCorrect', name: 'Until all answers correct'},
             {id: 'showAnswers', name: 'Show correct answers'},
           ],
         },
@@ -142,37 +145,26 @@ const QuizEntry = () => {
                       mb: 2,
                     }}></Box>
                   <FormControl>
-                    {card.form.map(f =>
-                      f.type === 'radio' ? (
-                        <>
-                          <FormLabel>{f.title}</FormLabel>
-                          <RadioGroup
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            name="radio-buttons-group">
-                            {f.buttons.map(b => (
-                              <FormControlLabel
-                                value={b.id}
-                                control={<Radio />}
-                                label={b.name}
-                              />
-                            ))}
-                          </RadioGroup>
-                        </>
-                      ) : (
-                        <>
-                          <FormLabel>{f.title}</FormLabel>
-                          <FormGroup>
-                            {f.buttons.map(b => (
-                              <FormControlLabel
-                                value={b.id}
-                                control={<Checkbox />}
-                                label={b.name}
-                              />
-                            ))}
-                          </FormGroup>
-                        </>
-                      ),
-                    )}
+                    {card.form.map(f => (
+                      <>
+                        <FormLabel>{f.title}</FormLabel>
+                        <FormGroup>
+                          {f.buttons.map(b => (
+                            <FormControlLabel
+                              value={b.id}
+                              control={
+                                <Checkbox
+                                  id={b.id}
+                                  checked={form[b.id]}
+                                  onChange={handleChange}
+                                />
+                              }
+                              label={b.name}
+                            />
+                          ))}
+                        </FormGroup>
+                      </>
+                    ))}
                   </FormControl>
                   <ul>
                     {card.description.map(line => (
