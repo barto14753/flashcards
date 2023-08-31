@@ -12,6 +12,9 @@
 
 👉 Start learning
 
+## Demo
+Github pages [demo](https://barto14753.github.io/flashcards#)
+
 ## Flashcards
 
 At first you need to prepare text file with your questions
