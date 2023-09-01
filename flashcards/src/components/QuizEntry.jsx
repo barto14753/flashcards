@@ -18,6 +18,7 @@ import {
   Grid,
   Typography,
 } from '@mui/material'
+import {DEFAULT_OPTIONS} from '../utils/Options'
 
 var cardStyle = {
   minHeight: '20vw',
@@ -29,11 +30,9 @@ const QuizEntry = () => {
     JSON.parse(localStorage.getItem('questions')) || [],
   )
 
-  const [form, setForm] = useState({
-    shuffleQuestions: false,
-    shuffleAnswers: false,
-    showAnswers: false,
-  })
+  const [form, setForm] = useState(
+    JSON.parse(localStorage.getItem('options')) || DEFAULT_OPTIONS,
+  )
 
   const handleChange = event => {
     const id = event.target.id
@@ -46,6 +45,7 @@ const QuizEntry = () => {
 
   const startQuiz = event => {
     localStorage.setItem('questionNum', 0)
+    localStorage.setItem('options', JSON.stringify(form))
     history.replace('/quiz')
   }
 

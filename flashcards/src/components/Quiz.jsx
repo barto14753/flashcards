@@ -19,7 +19,7 @@ import {
   NOT_ALL_CORRECT_CHOSEN,
   NOT_ANSWERED,
 } from '../utils/QuestionResult'
-import {useHistory} from 'react-router-dom/cjs/react-router-dom.min'
+import {DEFAULT_OPTIONS} from '../utils/Options'
 
 const useStyles = makeStyles(theme => ({
   correctAnswer: {
@@ -41,6 +41,7 @@ const useStyles = makeStyles(theme => ({
 
 const Quiz = () => {
   const classes = useStyles()
+  const options = JSON.parse(localStorage.getItem('options')) || DEFAULT_OPTIONS
 
   const [result, setResult] = useState(NOT_ANSWERED)
   const [questions, setQuestions] = useState(
