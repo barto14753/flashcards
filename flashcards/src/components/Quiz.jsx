@@ -62,7 +62,7 @@ const Quiz = () => {
   const isSingleChoice = question.correct.length === 1
   const getFormLabelClass = answer => {
     const answerIndex = question.answers.findIndex(val => val === answer)
-    if (isAnswered) {
+    if (isAnswered && (!options.showAnswers || result === CORRECT)) {
       return question.correct.includes(answerIndex)
         ? classes.correctAnswer
         : classes.wrongAnswer
@@ -116,12 +116,18 @@ const Quiz = () => {
   }
 
   const handleNext = () => {
-    const newQuestionNum = (questionNum + 1) % questions.length
+    const newQuestionNum = options.shuffleQuestions
+      ? Math.floor(Math.random() * questions.length)
+      : (questionNum + 1) % questions.length
     localStorage.setItem('questionNum', newQuestionNum)
     setQuestionNum(newQuestionNum)
     setChoices(Array(question.answers.length).fill(false))
     setResult(NOT_ANSWERED)
     setIsAnswered(false)
+  }
+
+  const answersOrder = () => {
+    return options.shuffleAnswers ? Math.random() - 0.5 : 1
   }
 
   return (
@@ -141,7 +147,7 @@ const Quiz = () => {
               <FormControl>
                 {isSingleChoice ? (
                   <RadioGroup onChange={handleRadioChange}>
-                    {question.answers.map(a => (
+                    {question.answers.sort(answersOrder).map(a => (
                       <FormControlLabel
                         className={getFormLabelClass(a)}
                         key={a}
@@ -154,7 +160,7 @@ const Quiz = () => {
                   </RadioGroup>
                 ) : (
                   <FormGroup onChange={handleCheckboxChange}>
-                    {question.answers.map(a => (
+                    {question.answers.sort(answersOrder).map(a => (
                       <FormControlLabel
                         className={getFormLabelClass(a)}
                         key={a}

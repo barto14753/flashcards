@@ -44,7 +44,10 @@ const QuizEntry = () => {
   }
 
   const startQuiz = event => {
-    localStorage.setItem('questionNum', 0)
+    localStorage.setItem(
+      'questionNum',
+      form.shuffleQuestions ? Math.floor(Math.random() * questions.length) : 0,
+    )
     localStorage.setItem('options', JSON.stringify(form))
     history.replace('/quiz')
   }
