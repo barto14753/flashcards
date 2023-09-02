@@ -127,7 +127,7 @@ const Quiz = () => {
   }
 
   const answersOrder = () => {
-    return options.shuffleAnswers ? Math.random() - 0.5 : 1
+    return 1
   }
 
   return (
