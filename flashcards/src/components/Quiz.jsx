@@ -147,7 +147,7 @@ const Quiz = () => {
               <FormControl>
                 {isSingleChoice ? (
                   <RadioGroup onChange={handleRadioChange}>
-                    {question.answers.sort(answersOrder).map(a => (
+                    {question.answers.map(a => (
                       <FormControlLabel
                         className={getFormLabelClass(a)}
                         key={a}
@@ -160,7 +160,7 @@ const Quiz = () => {
                   </RadioGroup>
                 ) : (
                   <FormGroup onChange={handleCheckboxChange}>
-                    {question.answers.sort(answersOrder).map(a => (
+                    {question.answers.map(a => (
                       <FormControlLabel
                         className={getFormLabelClass(a)}
                         key={a}
