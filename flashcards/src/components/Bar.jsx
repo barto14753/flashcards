@@ -11,6 +11,7 @@ import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
 import PsychologyIcon from '@mui/icons-material/Psychology'
+import {Link} from '@mui/material'
 
 const pages = [
   {
@@ -85,7 +86,9 @@ function Bar() {
               }}>
               {pages.map(page => (
                 <MenuItem key={page.link} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.name}</Typography>
+                  <Link href={page.link}>
+                    <Typography textAlign="center">{page.name}</Typography>
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -95,7 +98,7 @@ function Bar() {
             variant="h5"
             noWrap
             component="a"
-            href="/"
+            href="/flashcards"
             sx={{
               mr: 2,
               display: {xs: 'flex', md: 'none'},
