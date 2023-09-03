@@ -50,8 +50,18 @@ const Quiz = () => {
   const [questionNum, setQuestionNum] = useState(
     parseInt(localStorage.getItem('questionNum')) || 0,
   )
-  const [isAnswered, setIsAnswered] = useState(false)
+  const [answerShuffleParam, setAnswerShuffleParam] = useState(
+    Array(
+      Math.max.apply(
+        null,
+        questions.map(q => q.answers.length),
+      ),
+    )
+      .fill(null)
+      .map(() => Math.random() - 0.5),
+  )
 
+  const [isAnswered, setIsAnswered] = useState(false)
   const question = questions[questionNum]
   const [choices, setChoices] = useState(
     Array(question.answers.length).fill(false) || [],
@@ -59,10 +69,24 @@ const Quiz = () => {
   if (choices.length != question.answers.length) {
     setChoices(Array(question.answers.length).fill(false))
   }
+
+  const shuffledAnswers = question.answers
+    .map((value, index) => {
+      return {
+        value,
+        shuffleParam: answerShuffleParam[index],
+      }
+    })
+    .sort((a, b) => {
+      return a.shuffleParam - b.shuffleParam
+    })
+    .map(item => item.value)
+
+  const answers = options.shuffleAnswers ? shuffledAnswers : question.answers
   const isSingleChoice = question.correct.length === 1
   const getFormLabelClass = answer => {
     const answerIndex = question.answers.findIndex(val => val === answer)
-    if (isAnswered && (!options.showAnswers || result === CORRECT)) {
+    if (isAnswered && (options.showAnswers || result === CORRECT)) {
       return question.correct.includes(answerIndex)
         ? classes.correctAnswer
         : classes.wrongAnswer
@@ -106,11 +130,20 @@ const Quiz = () => {
     const allCorrectChosen = question.correct.every(
       correctIdx => choices[correctIdx],
     )
+
+    const atLeastOneWrongChosen =
+      choices
+        .map((v, i) => {
+          return {i: i, v: v}
+        })
+        .filter(v => v.v)
+        .filter(v => !question.correct.includes(v.i)).length > 0
+
     const sameCorrectAnswersAndChoices =
       question.correct.length === choices.filter(c => c).length
 
     if (allCorrectChosen && sameCorrectAnswersAndChoices) setResult(CORRECT)
-    else if (allCorrectChosen) setResult(INCORRECT_CHOSEN)
+    else if (atLeastOneWrongChosen) setResult(INCORRECT_CHOSEN)
     else setResult(NOT_ALL_CORRECT_CHOSEN)
     setIsAnswered(true)
   }
@@ -124,10 +157,6 @@ const Quiz = () => {
     setChoices(Array(question.answers.length).fill(false))
     setResult(NOT_ANSWERED)
     setIsAnswered(false)
-  }
-
-  const answersOrder = () => {
-    return 1
   }
 
   return (
@@ -147,7 +176,7 @@ const Quiz = () => {
               <FormControl>
                 {isSingleChoice ? (
                   <RadioGroup onChange={handleRadioChange}>
-                    {question.answers.map(a => (
+                    {answers.map(a => (
                       <FormControlLabel
                         className={getFormLabelClass(a)}
                         key={a}
@@ -160,7 +189,7 @@ const Quiz = () => {
                   </RadioGroup>
                 ) : (
                   <FormGroup onChange={handleCheckboxChange}>
-                    {question.answers.map(a => (
+                    {answers.map(a => (
                       <FormControlLabel
                         className={getFormLabelClass(a)}
                         key={a}
